@@ -1,5 +1,4 @@
-from sys import argv
-import sys
+from sys import argv, stdin
 
 import json
 
@@ -32,6 +31,7 @@ decoded: ParsedPage = page.decode()
 render(decoded)
 
 try:
-    while True: pass
+    while True: 
+        stdin.readline()
 except KeyboardInterrupt:
     print('Exited TPRCBL')
