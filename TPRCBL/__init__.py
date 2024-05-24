@@ -1,13 +1,10 @@
-# from sys import path
-# path.insert(0, 'C:\\leon zlender\\TPRCBL')
-
 from sys import argv
-# from parser.page import Page
-# from parser.file import file
-# from parser.pPage import ParsedPage
-from render import render
-from TPRCBL.elements import *
+import sys
 
+import json
+
+from render import render
+from elements import *
 
 class ParsedPage:
     def __init__(self, title: str = 'Page', elenents: list[Element] = []) -> None:
@@ -23,11 +20,18 @@ class Page:
 def parse(code: Page) -> ParsedPage:
     return ParsedPage(code.code.get('title'))
 
-def file(path: str) -> Page :
+def file(path: str) -> Page:
     with open(path, 'r') as f:
-        return Page(dict(f.read()))
+        d: str = f.read()
+        return Page(json.loads(d))
+
 
 page: Page = file(argv[1])
 decoded: ParsedPage = page.decode()
 
 render(decoded)
+
+try:
+    while True: pass
+except KeyboardInterrupt:
+    print('Exited TPRCBL')
