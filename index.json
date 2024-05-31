@@ -1,7 +1,7 @@
 {
     "title": "TPRCBL test",
     "body": [
-        ["para", null, "Hello world!"],
-        ["nl", null, null]
+        ["para", "Hello world!"],
+        ["nl"]
     ]
 }
