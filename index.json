@@ -1,7 +1,9 @@
 {
     "title": "TPRCBL test",
     "body": [
-        ["para", "Hello world!"],
-        ["nl"]
+        ["h", "TPRCBL"],
+        ["para", "Terminal Page Render"],
+        ["nl"],
+        ["para", "Curly Bracket Language"]
     ]
 }

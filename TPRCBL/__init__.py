@@ -1,5 +1,5 @@
 from sys import argv
-from os import get_terminal_size
+from os import get_terminal_size, system
 from msvcrt import getwch
 
 import json
@@ -8,7 +8,7 @@ from render import render
 from render.title import setTitle
 from elements import *
 
-setTitle('Loading from file...')
+
 class ParsedPage:
     def __init__(self, title: str = 'Page', elenents: list[Element] = []) -> None:
         self.title = title
@@ -28,7 +28,12 @@ def parse(code: Page) -> ParsedPage:
                 elems.append(Para(i[1]))
             else:
                 elems.append(Para(i[1]), i[2])
-    return ParsedPage(code.code.get('title'))
+        if i[0] == 'nl':
+            if len(i) == 2:
+                elems.append(NL(i[1]))
+            else:
+                elems.append(NL())
+    return ParsedPage(code.code.get('title'), elems)
 
 def file(path: str) -> Page:
     with open(path, 'r') as f:
@@ -36,6 +41,7 @@ def file(path: str) -> Page:
         return Page(json.loads(d))
 
 def load():
+    system('cls')
     page: Page = file(argv[1])
     setTitle('Parsing loaded file...')
     decoded: ParsedPage = page.decode()
@@ -44,15 +50,17 @@ def load():
     render(decoded)
 
 if __name__ == '__main__':
-    load()
-    try:
-        while True: 
-            inp: str = getwch()
-            if inp.lower() == 'x':
-                print('Exited TPRCBL', end='')
-                exit()
-            if inp.lower() == 'r':
-                print('\n' * get_terminal_size().lines)
-                load()
-    except KeyboardInterrupt:
-        print('Exited TPRCBL', end='')
+    if len(argv) >= 2:
+        setTitle('Loading from file...')
+        load()
+        try:
+            while True: 
+                inp: str = getwch()
+                if inp.lower() == 'x':
+                    system('cls')
+                    print('Exited TPRCBL', end='')
+                    exit()
+                if inp.lower() == 'r':
+                    load()
+        except KeyboardInterrupt:
+            print('Exited TPRCBL', end='')
