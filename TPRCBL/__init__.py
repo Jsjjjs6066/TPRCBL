@@ -40,26 +40,41 @@ def file(path: str) -> Page:
         d: str = f.read()
         return Page(json.loads(d))
 
-def load():
+def load() -> str:
     system('cls')
     page: Page = file(argv[1])
     setTitle('Parsing loaded file...')
     decoded: ParsedPage = page.decode()
 
     setTitle('Rendering loaded parsed file...')
-    render(decoded)
+    return render(decoded)
+
+def clr() -> None:
+    system('cls')
+
+def x(txt: str) -> None:
+    clr()
+    print('Do you want to exit TPRCBL? (Y/N)')
+    while True:
+        yn: str = getwch()
+        if getwch().lower() == 'y':
+            clr()
+            print('Exited TPRCBL', end='')
+            exit()
+        if getwch().lower() == 'n':
+            clr()
+            print(txt)
+            break
 
 if __name__ == '__main__':
     if len(argv) >= 2:
         setTitle('Loading from file...')
-        load()
+        txt: str = load()
         try:
             while True: 
                 inp: str = getwch()
                 if inp.lower() == 'x':
-                    system('cls')
-                    print('Exited TPRCBL', end='')
-                    exit()
+                    x(txt)
                 if inp.lower() == 'r':
                     load()
         except KeyboardInterrupt:
