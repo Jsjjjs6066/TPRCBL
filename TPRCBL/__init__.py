@@ -23,16 +23,22 @@ class Page:
 def parse(code: Page) -> ParsedPage:
     elems: list[Element] = []
     for i in code.code.get('body'):
-        if i[0] == 'para':
-            if len(i) == 2:
-                elems.append(Para(i[1]))
-            else:
-                elems.append(Para(i[1]), i[2])
-        if i[0] == 'nl':
-            if len(i) == 2:
-                elems.append(NL(i[1]))
-            else:
-                elems.append(NL())
+        match i[0]:
+            case 'para':
+                if len(i) == 2:
+                    elems.append(Para(i[1]))
+                else:
+                    elems.append(Para(i[1]), i[2])
+            case 'nl':
+                if len(i) == 2:
+                    elems.append(NL(i[1]))
+                else:
+                    elems.append(NL())
+            case 'line':
+                if len(i) == 3:
+                    elems.append(Line(i[1], i[2]))
+                else:
+                    elems.append(Line(i[1]))
     return ParsedPage(code.code.get('title'), elems)
 
 def file(path: str) -> Page:
@@ -57,11 +63,11 @@ def x(txt: str) -> None:
     print('Do you want to exit TPRCBL? (Y/N)')
     while True:
         yn: str = getwch()
-        if getwch().lower() == 'y':
+        if yn.lower() == 'y':
             clr()
             print('Exited TPRCBL', end='')
             exit()
-        if getwch().lower() == 'n':
+        if yn.lower() == 'n':
             clr()
             print(txt)
             break
@@ -76,6 +82,6 @@ if __name__ == '__main__':
                 if inp.lower() == 'x':
                     x(txt)
                 if inp.lower() == 'r':
-                    load()
+                    txt: str = load()
         except KeyboardInterrupt:
             print('Exited TPRCBL', end='')

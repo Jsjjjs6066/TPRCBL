@@ -3,7 +3,9 @@
     "body": [
         ["h", "TPRCBL"],
         ["para", "Terminal Page Render"],
-        ["nl"],
+        ["line", "-", {
+            "height": 1
+        }],
         ["para", "Curly Bracket Language"]
     ]
 }
