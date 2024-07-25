@@ -1,0 +1,9 @@
+{
+  "addPrefixesBeforeLogging": true,
+  "useColorsWhenLogging": true,
+  "useDatesBeforeLogging": false,
+  "loggingColors": {
+    "default": "reset",
+    "info":
+  }
+}
